@@ -1,0 +1,14 @@
+Default scope allows you to define a scope applied to every query on a model.
+
+  class User < ActiveRecord::Base
+    default_scope :conditions => { :banned => false }
+  end
+
+  User.find(:first)
+  > 'SELECT * FROM `users` WHERE `users`.`banned` = 0' LIMIT 1;
+
+To execute queries outside the default scope, use with_exclusive_scope
+
+  User.with_exclusive_scope do
+    find(:first)
+  end
